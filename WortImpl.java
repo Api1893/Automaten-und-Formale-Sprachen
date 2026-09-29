@@ -6,8 +6,9 @@ public class WortImpl implements Wort {
       }
 
       @Override
-      public char position(int k) {
-            return wort.charAt(k);
+      public char position(int s) {
+            // -1 because we want position and not index
+            return wort.charAt(s - 1);
       }
 
       @Override
@@ -22,30 +23,35 @@ public class WortImpl implements Wort {
 
       @Override
       public int anzahl(char c) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'anzahl'");
+            int characters = 0;
+            for (int i = 0; i < wort.length(); i++) {
+                  if (wort.charAt(i) == c) {
+                        characters++;
+                  }
+            };
+            return characters;
       }
 
       @Override
       public Wort tausche(char c1, char c2) {
-            return null;
+            // Required new WortImpl(), cause new object 
+            return new WortImpl(wort.replace(c1, c2));
       }
 
       @Override
       public int istTeilwortVon(Wort w) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'istTeilwortVon'");
+            return this.wort.indexOf(w.toString());
       }
 
       @Override
       public Wort teilwort(int start, int laenge) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'teilwort'");
+            String ausgeschnitten = wort.substring(start, start + laenge);
+            return new WortImpl(ausgeschnitten);
       }
 
       @Override
       public Wort ersetze(Wort w1, Wort w2) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'ersetze'");
+            // Wort is an object, so change the object to String()
+            return new WortImpl(wort.replace(w1.toString(), w2.toString()));
       }
 }
