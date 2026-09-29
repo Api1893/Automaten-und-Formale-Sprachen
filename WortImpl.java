@@ -12,8 +12,23 @@ public class WortImpl implements Wort {
       }
 
       @Override
+      public boolean equals(Object obj) {
+            if (this == obj) return true;
+
+            if(obj == null || getClass() != obj.getClass()) return false;
+            // (WortImpl) is casting. Change type
+            WortImpl anderesWort = (WortImpl) obj;
+            return this.wort.equals(anderesWort.wort);
+      }
+
+      @Override
       public int laenge() {
             return wort.length();
+      }
+
+      @Override
+      public String toString() {
+            return this.wort;
       }
 
       @Override
@@ -40,12 +55,20 @@ public class WortImpl implements Wort {
 
       @Override
       public int istTeilwortVon(Wort w) {
-            return this.wort.indexOf(w.toString());
+            // At first changes Object
+            WortImpl suchWort = (WortImpl) w;
+            int index = this.wort.indexOf(suchWort.wort);
+            if (index == -1) {
+                  return 0;
+            } else {
+                  return index + 1;
+            }
       }
 
       @Override
       public Wort teilwort(int start, int laenge) {
-            String ausgeschnitten = wort.substring(start, start + laenge);
+            int startCount = start - 1;
+            String ausgeschnitten = wort.substring(startCount, startCount + laenge);
             return new WortImpl(ausgeschnitten);
       }
 
